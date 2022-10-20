@@ -13,7 +13,7 @@ class Logger:
             file.write('\n')
             file.flush()
 
-    def exception(self):
+    def error(self):
         with open(self.path, 'a') as file:
             traceback.print_exc(file = file)
             file.flush()
