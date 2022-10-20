@@ -7,14 +7,19 @@ class Logger:
         with open(self.path, 'w') as file:
             pass
 
-    def log(self, text):
+    def info(self, text):
         with open(self.path, 'a') as file:
             file.write(text)
             file.write('\n')
             file.flush()
 
-    def crash(self):
+    def exception(self):
         with open(self.path, 'a') as file:
             traceback.print_exc(file = file)
             file.flush()
         raise Exception
+
+
+if __name__ == '__main__':
+    logger = Logger()
+    logger.info('Hello World!')

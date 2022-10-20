@@ -1,11 +1,11 @@
 class Class:
     @staticmethod
     def init():
-        print("Hello World in a class")
+        print('Hello World')
 
 
 def function():
-    print("Hello World in a function")
+    raise NotImplementedError
 
 
 if __name__ == '__main__':

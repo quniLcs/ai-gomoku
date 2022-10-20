@@ -7,7 +7,6 @@
 
 import pisqpipe as pp
 # from pisqpipe import DEBUG_EVAL, DEBUG
-
 from board import AlphaBetaBoard
 
 
@@ -26,4 +25,4 @@ if __name__ == '__main__':
     pp.brain_eval = board.eval
     pp.brain_about = board.about
 
-    pp.brain_init()
+    pp.main()
