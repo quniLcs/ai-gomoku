@@ -28,8 +28,8 @@ def brain_restart():
 
 
 def brain_turn():
-    agent = AlphaBetaAgent(board)
-    x, y = agent.search()
+    agent = AlphaBetaAgent()
+    x, y = agent.search(board)
     pp.do_mymove(x, y)
 
 
@@ -52,7 +52,7 @@ def brain_block(x, y):
 
 
 def brain_takeback(x, y):
-    raise NotImplementedError
+    pp.pipeOut("ERROR takeback not allowed")
 
 
 def brain_end():
