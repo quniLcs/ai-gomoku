@@ -125,11 +125,9 @@ class Board:
         assert z == 1 or z == 2
 
         if z == 1:
-            me = 1
-            opponent = 2
+            t = 2
         else:  # z == 2
-            me = 2
-            opponent = 1
+            t = 1
 
         score = 0
         mine = 1
@@ -137,24 +135,24 @@ class Board:
         length = 1
 
         i = 1
-        while x + i < self.width and self.board[x + i][y] == me:
+        while x + i < self.width and self.board[x + i][y] == z:
             mine += 1
             length += 1
             i += 1
         if x + i < self.width and self.board[x + i][y] == 0:
-            while x + i < self.width and self.board[x + i][y] != opponent:
+            while x + i < self.width and self.board[x + i][y] != t:
                 length += 1
                 i += 1
         else:
             block += 1
 
         i = 1
-        while x - i >= 0 and self.board[x - i][y] == me:
+        while x - i >= 0 and self.board[x - i][y] == z:
             mine += 1
             length += 1
             i += 1
         if x - i >= 0 and self.board[x - i][y] == 0:
-            while x - i >= 0 and self.board[x - i][y] != opponent:
+            while x - i >= 0 and self.board[x - i][y] != t:
                 length += 1
                 i += 1
         else:
@@ -167,24 +165,24 @@ class Board:
         length = 1
 
         i = 1
-        while y + i < self.height and self.board[x][y + i] == me:
+        while y + i < self.height and self.board[x][y + i] == z:
             mine += 1
             length += 1
             i += 1
         if y + i < self.height and self.board[x][y + i] == 0:
-            while y + i < self.height and self.board[x][y + i] != opponent:
+            while y + i < self.height and self.board[x][y + i] != t:
                 length += 1
                 i += 1
         else:
             block += 1
 
         i = 1
-        while y - i >= 0 and self.board[x][y - i] == me:
+        while y - i >= 0 and self.board[x][y - i] == z:
             mine += 1
             length += 1
             i += 1
         if y - i >= 0 and self.board[x][y - i] == 0:
-            while y - i >= 0 and self.board[x][y - i] != opponent:
+            while y - i >= 0 and self.board[x][y - i] != t:
                 length += 1
                 i += 1
         else:
@@ -197,24 +195,24 @@ class Board:
         length = 1
 
         i = 1
-        while x + i < self.width and y + i < self.height and self.board[x + i][y + i] == me:
+        while x + i < self.width and y + i < self.height and self.board[x + i][y + i] == z:
             mine += 1
             length += 1
             i += 1
         if x + i < self.width and y + i < self.height and self.board[x + i][y + i] == 0:
-            while x + i < self.width and y + i < self.height and self.board[x + i][y + i] != opponent:
+            while x + i < self.width and y + i < self.height and self.board[x + i][y + i] != t:
                 length += 1
                 i += 1
         else:
             block += 1
 
         i = 1
-        while x - i >= 0 and y - i >= 0 and self.board[x - i][y - i] == me:
+        while x - i >= 0 and y - i >= 0 and self.board[x - i][y - i] == z:
             mine += 1
             length += 1
             i += 1
         if x - i >= 0 and y - i >= 0 and self.board[x - i][y - i] == 0:
-            while x - i >= 0 and y - i >= 0 and self.board[x - i][y - i] != opponent:
+            while x - i >= 0 and y - i >= 0 and self.board[x - i][y - i] != t:
                 length += 1
                 i += 1
         else:
@@ -227,24 +225,24 @@ class Board:
         length = 1
 
         i = 1
-        while x + i < self.width and y - i >= 0 and self.board[x + i][y - i] == me:
+        while x + i < self.width and y - i >= 0 and self.board[x + i][y - i] == z:
             mine += 1
             length += 1
             i += 1
         if x + i < self.width and y - i >= 0 and self.board[x + i][y - i] == 0:
-            while x + i < self.width and y - i >= 0 and self.board[x + i][y - i] != opponent:
+            while x + i < self.width and y - i >= 0 and self.board[x + i][y - i] != t:
                 length += 1
                 i += 1
         else:
             block += 1
 
         i = 1
-        while x - i >= 0 and y + i < self.height and self.board[x - i][y + i] == me:
+        while x - i >= 0 and y + i < self.height and self.board[x - i][y + i] == z:
             mine += 1
             length += 1
             i += 1
         if x - i >= 0 and y + i < self.height and self.board[x - i][y + i] == 0:
-            while x - i >= 0 and y + i < self.height and self.board[x - i][y + i] != opponent:
+            while x - i >= 0 and y + i < self.height and self.board[x - i][y + i] != t:
                 length += 1
                 i += 1
         else:
@@ -364,7 +362,10 @@ class Board:
         else:
             x = self.width // 2
             y = self.height // 2
-            return [(x, y)]
+            if self.board[x][y] == 0:
+                return [(x, y)]
+            else:
+                return []
 
     def get_utility(self):
         utility = 0
@@ -373,3 +374,12 @@ class Board:
         for x, y in self.chess2:
             utility -= self.score2[x][y]
         return utility
+
+    def get_status(self):
+        for x, y in self.chess1:
+            if self.score1[x][y] >= self.shape_score['five']:
+                return 1
+        for x, y in self.chess2:
+            if self.score2[x][y] >= self.shape_score['five']:
+                return 2
+        return 0

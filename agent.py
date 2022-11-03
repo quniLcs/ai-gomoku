@@ -1,3 +1,4 @@
+from random import choice
 # from logger import Logger
 
 
@@ -48,3 +49,44 @@ class AlphaBetaAgent:
 				if utility < beta:
 					beta = utility
 		return utility, action
+
+
+class MCTSAgent:
+	max_times = 15
+	# logger = Logger()
+
+	def search(self, board):
+		reward = -1.0
+		action = None
+		for x, y in board.get_actions(1):
+			current = 0.0
+			for _ in range(self.max_times):
+				current += self.simulate(board, x, y, 1)
+			if current > reward:
+				reward = current
+				action = (x, y)
+		return action
+
+	def simulate(self, board, x, y, z):
+		original_score1, original_score2 = board.make_move(x, y, z)
+		status = board.get_status()
+
+		if status == 1:
+			result = 1.0
+		elif status == 2:
+			result = 0.0
+		else:
+			if z == 1:
+				t = 2
+			else:  # z == 2
+				t = 1
+
+			actions = board.get_actions(t)
+			if actions:
+				x, y = choice(actions)
+				result = self.simulate(board, x, y, t)
+			else:
+				result = 0.5
+
+		board.take_back(z, original_score1, original_score2)
+		return result
