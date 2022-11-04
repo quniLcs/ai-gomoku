@@ -3,7 +3,7 @@ from random import choice
 
 
 class AlphaBetaAgent:
-	max_depth = 5
+	max_depth = 10
 	# logger = Logger()
 
 	def search(self, board):
@@ -52,7 +52,7 @@ class AlphaBetaAgent:
 
 
 class MCTSAgent:
-	max_times = 15
+	max_times = 10
 	# logger = Logger()
 
 	def search(self, board):
